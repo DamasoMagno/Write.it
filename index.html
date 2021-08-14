@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NoteSharp - Annotations</title>
+    <link rel="stylesheet" href="./styles/global.css">
+    <link rel="stylesheet" href="./styles/annotations.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="content">
+        <div class="navigation">
+          <h1>NoteSharp</h1>
+          <nav>
+            <a href="/">Notas</a>
+            <a id="createAnnotation">Criar</a>
+          </nav>
+        </div>
+        <div class="buttons">
+          <a class="account" href="pages/signIn.html" id="login">Login</a>
+          <button class="account" id="logout">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="container">
+      <div id="cards"></div>
+    </main>
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script type="module">
+      import { App, Annotation } from "./scripts/annotations.js";
+      import { authConfigs } from "./scripts/auth.js";
+
+      App.init();
+
+      document.querySelector("#logout")
+        .addEventListener("click", authConfigs.logoutUser);
+
+      document.querySelector("#createAnnotation")
+        .addEventListener("click", Annotation.createAnnotation)  
+    </script>
+  </body>
+</html>

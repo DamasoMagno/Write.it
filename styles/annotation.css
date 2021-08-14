@@ -1,0 +1,150 @@
+/* === HEADER === */
+header {
+  border: 1px solid rgba(30, 30, 30, 0.75);
+}
+
+header .content {
+  max-width: 80%;
+  padding: 1rem 0;
+
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.content .navigation {
+  display: flex;
+  align-items: center;
+}
+
+.navigation nav {
+  margin-left: 2rem;
+}
+
+.navigation nav a {
+  cursor: pointer;
+  margin-right: .5rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.account {
+  background: #1F2729;
+  color: #FFFF;
+  border-radius: 1rem;
+  padding: .5rem 1rem;
+  font-weight: 800;
+  cursor: pointer;
+
+  transition: filter .2s;
+}
+
+.account:hover {
+  filter: brightness(0.90);
+}
+
+#logout {
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translateY(80%);
+}
+
+#logout::before {
+  content: "";
+  position: absolute;
+  top: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom: 5px solid #1F2729;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+.active {
+  visibility: visible !important;
+}
+
+/* === CONTAINER === */
+#container {
+  max-width: 80%;
+  margin: 1rem auto;
+}
+
+#note {
+  background: #171818;
+  box-shadow: 2px 2px 1px rgba(51, 51, 51, 0.2);
+  position: relative;
+  width: 100%;
+  padding: 3rem;
+  margin-top: 3rem auto 0;
+  border-radius: .25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#title {
+  border-left: 3px solid #333;
+  color: #FFFF;
+  font-weight: bold;
+  padding: .25rem .5rem;
+  cursor: text;
+  outline: 0;
+}
+
+#title:empty::after {
+  content: attr(placeholder);
+  color: #333;
+  font-weight: 700;
+}
+
+#description {
+  margin: 2rem 0 1rem;
+  text-align: justify;
+  outline: 0;
+  cursor: text;
+  font-size: 1rem;
+}
+
+#description:empty::after {
+  content: attr(placeholder);
+  color: #333;
+  font-weight: 700;
+}
+
+#buttons {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0 .5rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+#note a {
+  background-color: #0F0F0F;
+  text-decoration: none;
+  padding: .25rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  border-radius: .5rem;
+  color: #FFF;
+}
+
+#note button {
+  background-color: #0F0F0F;
+  border: 0;
+  border-radius: .5rem;
+  cursor: pointer;
+  padding: .25rem .5rem;
+  color: #FFF;
+}

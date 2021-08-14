@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt">
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>NoteSharp - Notas</title>
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/annotation.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  </head>
+  <body>
+      <header>
+        <div class="content">
+          <div class="navigation">
+            <h1>NoteSharp</h1>
+            <nav>
+              <a href="/">Notas</a>
+              <a id="createAnnotation">Criar</a>
+            </nav>
+          </div>
+          <div class="buttons">
+            <a class="account" href="pages/signIn.html" id="login">Login</a>
+            <button class="account" id="logout">Sair</button>
+          </div>
+        </div>
+      </header>
+
+      <main id="container">
+        <div id="note">
+          <section>
+            <h2 id="title" placeholder="Escreva o titulo da sua anotação" contenteditable></h2>
+          </section>
+
+          <section>
+            <p contenteditable id="description" placeholder="Escreva sua descrição aqui"></p>
+          </section>
+
+          <div id="buttons">
+            <a href="/">
+              <img src="../assets/backToHome.png" alt="" class="w-11/12">
+            </a>
+        </div>
+        </div>
+      </main>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script type="module" src="../scripts/firebase.js"></script>
+    <script type="module">
+      import { App } from "../scripts/annotation.js";
+      App.init();
+    </script>
+  </body>
+</html>

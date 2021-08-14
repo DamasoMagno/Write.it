@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt">
+<html>
+ <head>
+  <meta charset="UTF-8" />
+  <title>NoteSharp - SignIn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../styles/global.css">
+  <link rel="stylesheet" href="../styles/signIn.css">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <style>
+  </style>
+</head>
+<body>
+  <div id="container">
+    <section>
+      <div>
+        <h1>Login</h1>
+        <button id="google">
+          <img src="../assets/google.png">oogle
+        </button>
+
+        <div id="separator">
+          <span></span>
+          <span>OR</span>
+          <span></span>
+        </div>
+
+        <form>
+          <input placeholder="Email" type="email" >
+          <input placeholder="Password" type="password">
+          <button type="button" id="login">Login</button>
+          <form>
+          <a href="signUp.html" id="signUp">Criar conta</a>
+      </div>
+    </section>
+
+    <section>
+      <div>
+        <h2>Bem Vindo ao NoteSharp</h2>
+        <p>
+          Aqui você não precisa se preocupar em salvar nada,  
+          apenas digite o que você precisa e seu texto será salvo.
+        </p>
+        <img src="../assets/notesharp.png" alt="Logo notesharp">
+      </div>
+    </section>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script type="module">
+    import { authConfigs } from "../scripts/auth.js";
+    
+    const userEmail = document.querySelector("input[type=email]");
+    const userPassword = document.querySelector("input[type=password]");
+
+    document.querySelector("#login")
+      .addEventListener("click", () => authConfigs.signIn(userEmail, userPassword));
+
+    document.querySelector("#google")
+      .addEventListener("click", authConfigs.loginGoogle);
+  </script>
+ </body>
+</html>

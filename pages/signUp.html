@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt">
+<html>
+ <head>
+  <meta charset="UTF-8" />
+  <title>NoteSharp - SignUp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../styles/global.css">
+  <link rel="stylesheet" href="../styles/signUp.css">
+  
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <style>
+  </style>
+</head>
+<body>
+  <div id="container">
+    <section>
+      <div>
+        <h2>Bem Vindo ao NoteSharp</h2>
+        <p>
+          Agilidade e praticidade. No Notesharp você cria suas anotações sem preocupações
+        </p>
+        <img src="../assets/notesharp.png" alt="Logo notesharp">
+      </div>
+    </section>
+   
+    <section class="flex-1">
+      <div>
+        <h1>Criar Conta</h1>
+        <button id="google">
+          <img src="../assets/google.png" class="w-5">oogle
+        </button>
+
+        <div id="separator">
+          <span></span>
+          <span>OR</span>
+          <span></span>
+        </div>
+
+        <form>
+          <input placeholder="Name" id="name">
+          <input placeholder="Email" type="email" >
+          <input placeholder="Password" type="password">
+          <button type="button" id="signUp">Criar Conta</button>
+        <form>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script type="module">
+    import { authConfigs } from "../scripts/auth.js";
+
+    const userEmail = document.querySelector("input[type=email]");
+    const userPassword = document.querySelector("input[type=password]");
+    const displayName = document.querySelector("#name");
+
+    document.querySelector("#signUp")
+      .addEventListener("click", () => authConfigs.signUp(userEmail, userPassword, displayName));
+    
+    document.querySelector("#google")
+      .addEventListener("click", authConfigs.loginGoogle);
+  </script>
+ </body>
+</html>
