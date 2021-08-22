@@ -30,11 +30,19 @@
       <main id="container">
         <div id="note">
           <section>
-            <h2 id="title" placeholder="Escreva o titulo da sua anotação" contenteditable></h2>
+            <h2 
+              id="title" 
+              placeholder="Escreva o titulo da sua anotação" 
+              contenteditable
+            ></h2>
           </section>
 
           <section>
-            <p contenteditable id="description" placeholder="Escreva sua descrição aqui"></p>
+            <p 
+              contenteditable 
+              id="description" 
+              placeholder="Escreva sua descrição aqui"
+            ></p>
           </section>
 
           <div id="buttons">
@@ -48,10 +56,16 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-    <script type="module" src="../scripts/firebase.js"></script>
     <script type="module">
-      import { App } from "../scripts/annotation.js";
+      import { App } from "../scripts/annotation.js"
+      import { authConfigs } from "../scripts/auth.js"
+      import { userConfigs } from "../scripts/userConfigs.js"
+
       App.init();
+      userConfigs.showDisplayName()
+
+      document.querySelector("#logout")
+        .addEventListener("click", authConfigs.logoutUser)
     </script>
   </body>
 </html>

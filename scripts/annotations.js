@@ -1,29 +1,19 @@
-import { auth, database } from "./firebase.js";
+import { auth, database } from "./firebase.js"
+
+const databaseRef = database.ref("/annotations")
 
 const formatData = {
   formatData(data, limit){
-    let dataFormatted = data.length >= 25 ? data.slice(0, limit) + "..." : data;
-    return dataFormatted;
+    return data.length >= 25 ? data.slice(0, limit) + "..." : data
   },
 }
 
 const DOM = {
-  userDisplayName: document.querySelector("#login"),
-  buttonLogout: document.querySelector("#logout"),
   container: document.querySelector("#cards"),
-
-  showNameUser(displayName){
-    this.userDisplayName.removeAttribute("href");
-    this.userDisplayName.innerHTML = displayName;
-    
-    this.userDisplayName.addEventListener("click", () => {
-      this.buttonLogout.classList.toggle("active");
-    });
-  },
 
   generateAnnotationsHTML(annotation, key){  
     const content = 
-    `<a href=/pages/annotation.html?id=${key}>
+    `<a>
       <div class="card-Annotation">
         <section class="header-card">
           <h3>${formatData.formatData(annotation.title, 10)}</h3>
@@ -31,11 +21,14 @@ const DOM = {
 
         <section class="content">
           <p>${formatData.formatData(annotation.description, 100)}</p>
+          <button id="delete">
+            <img src="../assets/garbageImage.png">
+          </button>
         </section>
       </div>
-    </a>`;
+    </a>`
 
-    return content;
+    return content
   },
 
   renderAnnontationsLoading(){
@@ -49,22 +42,34 @@ const DOM = {
         <p></p>
       </section>
     </div>
-    `;
+    `
 
-    return html;
+    return html
   },
 
   renderAllAnottations(annotations, key){
-    this.container.innerHTML += this.generateAnnotationsHTML(annotations, key);
+    this.container.innerHTML += this.generateAnnotationsHTML(annotations, key)
+
+    document.querySelector("#delete")
+      .addEventListener("click", () => Annotation.removeAnnotation(key))
+  },
+
+  clearContainer(){
+    this.container.innerHTML = ""
   }
 }
 
 const Annotation = {
-  async createAnnotation(){
+  createAnnotation(){
     const anottation = {}
 
-    const { key } = database.ref('annotations').push(anottation);
-    location.href = `pages/annotation.html?id=${key}`;
+    const { key } = databaseRef.push(anottation)
+    location.href = `pages/annotation.html?id=${key}`
+  },
+
+  removeAnnotation(id){
+    console.log(id)
+    database.ref(`/annotations/${id}`).remove()
   }
 }
 
@@ -72,37 +77,39 @@ const App = {
   init(){
     auth.onAuthStateChanged((user) => {
       if (!user) {
-        return;
+        return
       } 
 
-
-      DOM.showNameUser(user.displayName);
-      DOM.container.innerHTML = DOM.renderAnnontationsLoading();
-      this.getUserAnnotations(user);
-    });
+      DOM.container.innerHTML = DOM.renderAnnontationsLoading()
+      this.getUserAnnotations(user)
+    })
   },
 
   getUserAnnotations(user){
-    const ref = firebase.database().ref("annotations")
-    .orderByChild("authorId").equalTo(user.uid);
+    const userAnnotations = databaseRef
+      .orderByChild("authorId")
+      .equalTo(user.uid)
     
-    ref.once('value', (snapshot) => {
-      const annotationData = snapshot.val();
-      if(annotationData) {
-        DOM.container.innerHTML = "";
-
-        const keyAnottations = Object.keys(annotationData);
-        keyAnottations.forEach(key => {
-          const annotation = annotationData[key];
-          console.log(annotation.title, annotation.description);
-          if(!annotation.title || !annotation.description) return;
-          DOM.renderAllAnottations(annotation, key);
-        }); 
-  
+    userAnnotations.once('value', snapshot => {
+      const annotationData = snapshot.val()
+      
+      if(!annotationData){
+        setTimeout(() => {
+          DOM.clearContainer()
+        }, 1000)
         return;
       }
-    });
+
+      DOM.clearContainer()
+
+      Object.keys(annotationData)
+        .forEach(key => {
+          const annotation = annotationData[key]
+          if(!annotation.title || !annotation.description) return
+          DOM.renderAllAnottations(annotation, key)
+        }) 
+    })
   }
 }
 
-export { App, Annotation };
+export { App, Annotation }

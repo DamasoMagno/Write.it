@@ -102,20 +102,26 @@ header .content {
 }
 
 .card-Annotation .header-card > h3 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-weight: 800;
 }
 
 .card-Annotation .content {
   padding: .5rem .5rem 3rem;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card-Annotation .content > p {
   text-align: justify;
   word-break: break-all;
   font-size: .9rem;
+}
+
+.card-Annotation .content button {
+  align-self: flex-end;
+  background: rgba(0, 0, 0, .5);
 }
 
 /* ==== CARD LOADING ==== */

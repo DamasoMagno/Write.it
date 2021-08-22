@@ -6,11 +6,11 @@ const firebaseConfig = {
   storageBucket: "notesharp-57c65.appspot.com",
   messagingSenderId: "244613409847",
   appId: "1:244613409847:web:e2b1ca5756ea975592a3b2"
-};
-firebase.initializeApp(firebaseConfig);
+}
+firebase.initializeApp(firebaseConfig)
 
-const database = firebase.database();
-const auth = firebase.auth();
-const provider =  new firebase.auth.GoogleAuthProvider();
+const database = firebase.database()
+const auth = firebase.auth()
+const provider =  new firebase.auth.GoogleAuthProvider()
 
-export { database, auth, provider };
+export { database, auth, provider }

@@ -1,42 +1,48 @@
-import { database } from "./firebase.js";
-import { Utils } from "./utils.js";
+import { database } from "./firebase.js"
+import { Utils } from "./utils.js"
 
-const idAnnotation = Utils.getParamsURL("id");
-const ref = database.ref(`annotations/${idAnnotation}`);
+const idAnnotation = Utils.getParamsURL("id")
+const ref = database.ref(`annotations/${idAnnotation}`)
 
 let anottation = {};
-let title = document.querySelector("#title");
-let description = document.querySelector("#description");
+let title = document.querySelector("#title")
+let description = document.querySelector("#description")
 
-title.addEventListener("keyup", editAnottation);
-description.addEventListener("keyup", editAnottation);
+title.addEventListener("keyup", editAnottation)
+description.addEventListener("keyup", editAnottation)
 
-function editAnottation(e){
+function getContentElement(element){
+  const text = document.querySelector(`#${element}`).innerText
+  return text || ""
+}
+
+function editAnottation(){
   anottation = {
-    ...anottation,
-    [e.target.id]: e.target.innerText
+    title: getContentElement("title"),
+    description: getContentElement("description")
   }
  
-  changeContentAnnotation(anottation);
+  changeContentAnnotation(anottation)
 }
 
 function changeContentAnnotation(anottation){
-  if(idAnnotation){
-    ref.set({
-      ...anottation,
-      authorId: JSON.parse(localStorage.getItem("@Notesharp:credentials"))
-    });
-  }
+  if(!idAnnotation) return
+  if(!anottation.title && !anottation.description) return
+
+  ref.set({
+    ...anottation,
+    authorId: JSON.parse(localStorage.getItem("@Notesharp:credentials"))
+  });
 } 
 
 const App = {
   init(){
     ref.once("value", snapshot => {
       const annotation = snapshot.val();
-      if(annotation.title && annotation.description){
-        title.innerHTML = annotation.title;
-        description.innerHTML = annotation.description;
-      }
+      if(!annotation) return
+
+      title.innerHTML = annotation.title
+      description.innerHTML = annotation.description
     });
   }
 }

@@ -1,4 +1,4 @@
-import { auth, provider } from "./firebase.js";
+import { auth, provider } from "./firebase.js"
 
 function toast(error){
   Toastify({
@@ -8,63 +8,62 @@ function toast(error){
     gravity: "top", 
     position: "center",
     backgroundColor: "#9CA3AF",
-  }).showToast();
+  }).showToast()
 }
 
 function saveIdAndRedirect(credentials){
-  localStorage.setItem("@Notesharp:credentials", JSON.stringify(credentials.uid));
-  location.href = "/";
+  localStorage.setItem("@Notesharp:credentials", JSON.stringify(credentials.uid))
+  location.href = "/"
 }
 
 const authConfigs = {
   async signUp(email, password, displayName){
-    const userEmail = email.value;
-    const userPassword = password.value;
-    const displayUser = displayName.value;
+    const userEmail = email.value
+    const userPassword = password.value
+    const displayUser = displayName.value
 
     try {
-      const { user: credentials } = await auth.createUserWithEmailAndPassword(userEmail, userPassword);
-
+      const { user: credentials } = await auth.createUserWithEmailAndPassword(userEmail, userPassword)
       credentials.updateProfile({
         displayName: displayUser
-      });
-
-      console.log(credentials);
-      saveIdAndRedirect(credentials);
+      })
+      saveIdAndRedirect(credentials)
     } catch {
-      toast("This user already exists");
+      toast("This user already exists")
     }    
   },
 
   async signIn(email, password){
-    const userEmail = email.value;
-    const userPassword = password.value;
+    const userEmail = email.value
+    const userPassword = password.value
 
     try {
-      const { user: credentials } = await auth.signInWithEmailAndPassword(userEmail, userPassword);
-
-      saveIdAndRedirect(credentials);
+      const { user: credentials } = await auth.signInWithEmailAndPassword(userEmail, userPassword)
+      saveIdAndRedirect(credentials)
     } catch {
-      toast("Email/Password incorrect");
+      toast("Email/Password incorrect")
     }
   },
 
   async logoutUser(){
     try {
-      await auth.signOut();
-      localStorage.removeItem("@Notesharp:credentials");
-      location.href = "/";
+      await auth.signOut()
+      localStorage.removeItem("@Notesharp:credentials")
+      location.href = "/"
     } catch {
-      console.log(error.message);
-      toast("You aren't logged in");
+      console.log(error.message)
+      toast("You aren't logged in")
     }
   },
 
   async loginGoogle(){
-    const { user: credentials }  = await auth.signInWithPopup(provider);
-    
-    saveIdAndRedirect(credentials);
+    try {
+      const { user: credentials }  = await auth.signInWithPopup(provider)
+      saveIdAndRedirect(credentials)
+    } catch (error) {
+      toast(error.message);
+    }
   }
 }
 
-export { authConfigs };
+export { authConfigs }

@@ -36,13 +36,16 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <script type="module">
-      import { App, Annotation } from "./scripts/annotations.js";
-      import { authConfigs } from "./scripts/auth.js";
+      import { App, Annotation } from "./scripts/annotations.js"
+      import { userConfigs } from "./scripts/userConfigs.js"
+      import { authConfigs } from "./scripts/auth.js"
 
       App.init();
 
       document.querySelector("#logout")
-        .addEventListener("click", authConfigs.logoutUser);
+        .addEventListener("click", authConfigs.logoutUser)
+
+      userConfigs.showDisplayName()
 
       document.querySelector("#createAnnotation")
         .addEventListener("click", Annotation.createAnnotation)  
