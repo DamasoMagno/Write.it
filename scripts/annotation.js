@@ -41,8 +41,8 @@ const App = {
       const annotation = snapshot.val();
       if(!annotation) return
 
-      title.innerHTML = annotation.title
-      description.innerHTML = annotation.description
+      title.innerText = annotation.title
+      description.innerText = annotation.description
     });
   }
 }

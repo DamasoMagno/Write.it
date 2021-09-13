@@ -3,24 +3,27 @@ import { auth, database } from "./firebase.js"
 const databaseRef = database.ref("/annotations")
 
 const formatData = {
-  formatData(data, limit){
-    return data.length >= 25 ? data.slice(0, limit) + "..." : data
+  formatData(data, maxLength,limit){
+    let dataFormatted = data.length >= maxLength ? data.slice(0, limit) + "..." : data
+    return dataFormatted
   },
 }
+
+let userInformations
 
 const DOM = {
   container: document.querySelector("#cards"),
 
   generateAnnotationsHTML(annotation, key){  
     const content = 
-    `<a>
+    `<a href="pages/annotation.html?id=${key}">
       <div class="card-Annotation">
         <section class="header-card">
-          <h3>${formatData.formatData(annotation.title, 10)}</h3>
+          <h3>${formatData.formatData(annotation.title, 50, 30)}</h3>
         </section>
 
         <section class="content">
-          <p>${formatData.formatData(annotation.description, 100)}</p>
+          <p>${formatData.formatData(annotation.description, 100, 150)}</p>
           <button id="delete">
             <img src="../assets/garbageImage.png">
           </button>
@@ -51,7 +54,10 @@ const DOM = {
     this.container.innerHTML += this.generateAnnotationsHTML(annotations, key)
 
     document.querySelector("#delete")
-      .addEventListener("click", () => Annotation.removeAnnotation(key))
+      .addEventListener("click", (e) => {
+        e.preventDefault()
+        Annotation.removeAnnotation(key)
+      })
   },
 
   clearContainer(){
@@ -68,8 +74,8 @@ const Annotation = {
   },
 
   removeAnnotation(id){
-    console.log(id)
     database.ref(`/annotations/${id}`).remove()
+    App.getUserAnnotations()
   }
 }
 
@@ -80,15 +86,16 @@ const App = {
         return
       } 
 
+      userInformations = user
       DOM.container.innerHTML = DOM.renderAnnontationsLoading()
-      this.getUserAnnotations(user)
+      this.getUserAnnotations()
     })
   },
 
-  getUserAnnotations(user){
+  getUserAnnotations(){
     const userAnnotations = databaseRef
       .orderByChild("authorId")
-      .equalTo(user.uid)
+      .equalTo(userInformations.uid)
     
     userAnnotations.once('value', snapshot => {
       const annotationData = snapshot.val()

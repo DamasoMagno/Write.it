@@ -96,6 +96,19 @@ section:nth-child(2) div form a {
   margin-top: 1rem;
 }
 
+@media(max-width: 720px){
+ section:nth-child(2){
+  display: block;
+ }
+
+ section:nth-child(2) div {
+ width: 80%;
+ }
+ section:nth-child(1){
+  display: none;
+ }
+}
+
 section:nth-child(1){
   flex: 1;
 }
